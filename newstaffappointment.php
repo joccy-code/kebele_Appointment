@@ -50,6 +50,7 @@
     $result = $database->query($sqlmain);
 ?>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,238 +58,239 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fb;
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fb;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-color: #f5f7fb;
+        border-right: 1px solid #e5e7eb;
+        padding: 1.5rem;
+    }
+
+    .main-content {
+        margin-left: 250px;
+        padding: 2rem;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        color: #374151;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+        transition: all 0.2s;
+    }
+
+    .nav-item:hover {
+        background-color: rgba(59, 130, 246, 0.05);
+        color: #3b82f6;
+    }
+
+    .nav-item.active {
+        background-color: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+        border-radius: 8px;
+    }
+
+    .nav-item i {
+        width: 20px;
+        margin-right: 0.75rem;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .appointments-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .appointments-table th {
+        background-color: #f8fafc;
+        font-weight: 600;
+        text-align: left;
+        padding: 1rem;
+        color: #475569;
+        font-size: 0.875rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .appointments-table tr:nth-child(even) {
+        background-color: #f8fafc;
+    }
+
+    .appointments-table td {
+        padding: 1rem;
+        color: #475569;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .appointments-table tr:hover {
+        background-color: rgba(59, 130, 246, 0.05);
+    }
+
+    .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .status-badge.upcoming {
+        background-color: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+    }
+
+    .status-badge.completed {
+        background-color: #dcfce7;
+        color: #16a34a;
+    }
+
+    .action-button {
+        padding: 0.5rem;
+        border-radius: 0.375rem;
+        transition: all 0.2s;
+        color: #3b82f6;
+    }
+
+    .action-button:hover {
+        background-color: rgba(59, 130, 246, 0.1);
+    }
+
+    .btn-primary {
+        background-color: #3b82f6;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+        background-color: #2563eb;
+    }
+
+    .notification-icon {
+        background-color: #3b82f6;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+        .sidebar {
+            transform: translateX(-100%);
+            z-index: 50;
         }
 
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: #f5f7fb;
-            border-right: 1px solid #e5e7eb;
-            padding: 1.5rem;
+        .sidebar.open {
+            transform: translateX(0);
         }
 
         .main-content {
-            margin-left: 250px;
-            padding: 2rem;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            color: #374151;
-            text-decoration: none;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-            transition: all 0.2s;
-        }
-
-        .nav-item:hover {
-            background-color: rgba(59, 130, 246, 0.05);
-            color: #3b82f6;
-        }
-
-        .nav-item.active {
-            background-color: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-            border-radius: 8px;
-        }
-
-        .nav-item i {
-            width: 20px;
-            margin-right: 0.75rem;
+            margin-left: 0;
         }
 
         .table-container {
-            background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            margin-top: 1rem;
         }
 
-        .appointments-table {
+        .appointments-table thead {
+            display: none;
+        }
+
+        .appointments-table,
+        .appointments-table tbody,
+        .appointments-table tr,
+        .appointments-table td {
+            display: block;
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
         }
 
-        .appointments-table th {
-            background-color: #f8fafc;
-            font-weight: 600;
-            text-align: left;
+        .appointments-table tr {
+            margin-bottom: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
             padding: 1rem;
-            color: #475569;
-            font-size: 0.875rem;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .appointments-table tr:nth-child(even) {
-            background-color: #f8fafc;
         }
 
         .appointments-table td {
-            padding: 1rem;
-            color: #475569;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .appointments-table tr:hover {
-            background-color: rgba(59, 130, 246, 0.05);
-        }
-
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .status-badge.upcoming {
-            background-color: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-        }
-
-        .status-badge.completed {
-            background-color: #dcfce7;
-            color: #16a34a;
-        }
-
-        .action-button {
-            padding: 0.5rem;
-            border-radius: 0.375rem;
-            transition: all 0.2s;
-            color: #3b82f6;
-        }
-
-        .action-button:hover {
-            background-color: rgba(59, 130, 246, 0.1);
-        }
-
-        .btn-primary {
-            background-color: #3b82f6;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .btn-primary:hover {
-            background-color: #2563eb;
-        }
-
-        .notification-icon {
-            background-color: #3b82f6;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                z-index: 50;
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .table-container {
-                margin-top: 1rem;
-            }
-
-            .appointments-table thead {
-                display: none;
-            }
-
-            .appointments-table, 
-            .appointments-table tbody, 
-            .appointments-table tr, 
-            .appointments-table td {
-                display: block;
-                width: 100%;
-            }
-
-            .appointments-table tr {
-                margin-bottom: 1rem;
-                border: 1px solid #e5e7eb;
-                border-radius: 0.5rem;
-                padding: 1rem;
-            }
-
-            .appointments-table td {
-                text-align: right;
-                padding: 0.5rem 0;
-                border: none;
-                position: relative;
-            }
-
-            .appointments-table td::before {
-                content: attr(data-label);
-                float: left;
-                font-weight: 600;
-                color: #475569;
-            }
-        }
-
-        /* Popup styles */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .popup {
-            background: white;
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: right;
+            padding: 0.5rem 0;
+            border: none;
             position: relative;
-            width: 90%;
-            max-width: 500px;
         }
 
-        .popup .close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            color: #6b7280;
-            text-decoration: none;
-            transition: color 0.2s;
+        .appointments-table td::before {
+            content: attr(data-label);
+            float: left;
+            font-weight: 600;
+            color: #475569;
         }
+    }
 
-        .popup .close:hover {
-            color: #1f2937;
-        }
+    /* Popup styles */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .popup {
+        background: white;
+        padding: 2rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: relative;
+        width: 90%;
+        max-width: 500px;
+    }
+
+    .popup .close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        color: #6b7280;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .popup .close:hover {
+        color: #1f2937;
+    }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -306,15 +308,12 @@
                 <i class="far fa-calendar-check"></i>
                 My Appointments
             </a>
-            <a href="#" class="nav-item">
+            <a href="newschedule.php" class="nav-item">
                 <i class="far fa-clock"></i>
                 My Sessions
             </a>
-            <a href="#" class="nav-item">
-                <i class="fas fa-cog"></i>
-                Settings
-            </a>
-            <a href="#" class="nav-item">
+
+            <a href="logout.php" class="nav-item">
                 <i class="fas fa-sign-out-alt"></i>
                 Logout
             </a>
@@ -333,13 +332,13 @@
                 <form action="" method="post" class="flex items-center space-x-4">
                     <div class="relative">
                         <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Filter by Date</label>
-                        <input type="date" name="sheduledate" id="date" 
-                               class="pl-4 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                               value="<?php echo isset($_POST['sheduledate']) ? $_POST['sheduledate'] : ''; ?>">
+                        <input type="date" name="sheduledate" id="date"
+                            class="pl-4 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            value="<?php echo isset($_POST['sheduledate']) ? $_POST['sheduledate'] : ''; ?>">
                     </div>
                     <div class="flex items-end">
-                        <input type="submit" name="filter" value="Filter" 
-                               class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg cursor-pointer">
+                        <input type="submit" name="filter" value="Filter"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg cursor-pointer">
                     </div>
                 </form>
             </div>
@@ -460,11 +459,12 @@
     ?>
 
     <script>
-        // Mobile sidebar toggle
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('open');
-        }
+    // Mobile sidebar toggle
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('open');
+    }
     </script>
 </body>
+
 </html>

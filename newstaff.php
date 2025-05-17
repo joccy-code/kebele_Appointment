@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,116 +8,117 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fb;
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fb;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-color: white;
+        border-right: 1px solid #e5e7eb;
+        padding: 1.5rem;
+    }
+
+    .main-content {
+        margin-left: 250px;
+        padding: 2rem;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        color: #6b7280;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+        transition: all 0.2s;
+    }
+
+    .nav-item:hover {
+        background-color: #f3f4f6;
+        color: #3b82f6;
+    }
+
+    .nav-item.active {
+        background-color: #ebf5ff;
+        color: #3b82f6;
+    }
+
+    .nav-item i {
+        width: 20px;
+        margin-right: 0.75rem;
+    }
+
+    .summary-card {
+        background: white;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .summary-card:hover {
+        transform: translateY(-2px);
+    }
+
+    .appointment-card {
+        background: white;
+        border-radius: 0.5rem;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid #e5e7eb;
+        transition: all 0.2s;
+    }
+
+    .appointment-card:hover {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .status-badge.upcoming {
+        background-color: #ebf5ff;
+        color: #3b82f6;
+    }
+
+    .status-badge.completed {
+        background-color: #dcfce7;
+        color: #16a34a;
+    }
+
+    .status-badge.missed {
+        background-color: #fee2e2;
+        color: #dc2626;
+    }
+
+    @media (max-width: 768px) {
+        .sidebar {
+            transform: translateX(-100%);
+            z-index: 50;
         }
 
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: white;
-            border-right: 1px solid #e5e7eb;
-            padding: 1.5rem;
+        .sidebar.open {
+            transform: translateX(0);
         }
 
         .main-content {
-            margin-left: 250px;
-            padding: 2rem;
+            margin-left: 0;
         }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            color: #6b7280;
-            text-decoration: none;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-            transition: all 0.2s;
-        }
-
-        .nav-item:hover {
-            background-color: #f3f4f6;
-            color: #3b82f6;
-        }
-
-        .nav-item.active {
-            background-color: #ebf5ff;
-            color: #3b82f6;
-        }
-
-        .nav-item i {
-            width: 20px;
-            margin-right: 0.75rem;
-        }
-
-        .summary-card {
-            background: white;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-
-        .summary-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .appointment-card {
-            background: white;
-            border-radius: 0.5rem;
-            padding: 1.25rem;
-            margin-bottom: 1rem;
-            border: 1px solid #e5e7eb;
-            transition: all 0.2s;
-        }
-
-        .appointment-card:hover {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .status-badge.upcoming {
-            background-color: #ebf5ff;
-            color: #3b82f6;
-        }
-
-        .status-badge.completed {
-            background-color: #dcfce7;
-            color: #16a34a;
-        }
-
-        .status-badge.missed {
-            background-color: #fee2e2;
-            color: #dc2626;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                z-index: 50;
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-        }
+    }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -134,15 +136,11 @@
                 <i class="far fa-calendar-check"></i>
                 My Appointments
             </a>
-            <a href="#" class="nav-item">
+            <a href="newschedule.php" class="nav-item">
                 <i class="far fa-clock"></i>
                 My Sessions
             </a>
-            <a href="#" class="nav-item">
-                <i class="fas fa-cog"></i>
-                Settings
-            </a>
-            <a href="#" class="nav-item">
+            <a href="logout.php" class="nav-item">
                 <i class="fas fa-sign-out-alt"></i>
                 Logout
             </a>
@@ -284,11 +282,12 @@
     </div>
 
     <script>
-        // Mobile sidebar toggle
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('open');
-        }
+    // Mobile sidebar toggle
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('open');
+    }
     </script>
 </body>
+
 </html>
