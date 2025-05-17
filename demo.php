@@ -1,7 +1,3 @@
-<!-- <?php 
-$currentPage = 'page_name';
-include 'includes/sidebar.php';
-?> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -226,7 +222,7 @@ include 'includes/sidebar.php';
                 </a>
             </div>
             <div class="md:ml-8 mt-8 md:mt-0">
-                <img src="image1.png" alt="" class="hero-section-img">
+                <img src="image1.jpg" alt="" class="hero-section-img">
             </div>
         </section>
 
