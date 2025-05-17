@@ -1,0 +1,36 @@
+# Composer dependencies
+/vendor/
+
+# Node dependencies (if using npm, for front-end assets)
+/node_modules/
+
+# Environment variables
+.env
+
+# System/IDE files
+.DS_Store
+*.log
+*.bak
+*.tmp
+*.swp
+
+# PHPStorm or VSCode
+.idea/
+.vscode/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Laravel or other frameworks (if used)
+bootstrap/cache/
+storage/*.key
+storage/logs/
+storage/framework/sessions/
+storage/framework/views/
+storage/framework/cache/
+
+# Database dumps
+*.sql
+*.sqlite
